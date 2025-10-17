@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${employee.id == null} ? 'Add Employee' : 'Edit Employee'">Employee Form</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 th:text="${employee.id == null} ? 'Add Employee' : 'Edit Employee'"></h2>
+    <form th:action="${employee.id == null} ? @{/employees} : @{/employees/update/{id}(id=${employee.id})}"
+          th:object="${employee}" method="post">
+
+        <!-- Employee Name -->
+        <div class="mb-3">
+            <label for="name" class="form-label">Name</label>
+            <input type="text" th:field="*{name}" class="form-control" id="name" placeholder="Enter name" required>
+        </div>
+
+        <!-- Employee Email -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" th:field="*{email}" class="form-control" id="email" placeholder="Enter email" required>
+        </div>
+
+        <!-- Employee Gender -->
+        <div class="mb-3">
+            <label for="gender" class="form-label">Gender</label>
+            <input type="text" th:field="*{gender}" class="form-control" id="gender" placeholder="Enter gender">
+        </div>
+
+        <!-- Employee Department -->
+        <div class="mb-3">
+            <label for="departmentName" class="form-label">Department Name</label>
+            <input type="text" th:field="*{department.name}" class="form-control" id="departmentName" placeholder="Department Name">
+        </div>
+
+        <div class="mb-3">
+            <label for="departmentDescription" class="form-label">Department Description</label>
+            <input type="text" th:field="*{department.description}" class="form-control" id="departmentDescription" placeholder="Department Description">
+        </div>
+
+        <!-- Projects -->
+        <div class="mb-3">
+            <label for="projectNames" class="form-label">Project Names (comma separated)</label>
+            <input type="text" name="projectNames" th:value="${projectNamesString}" class="form-control" id="projectNames" placeholder="Project1, Project2">
+        </div>
+
+        <div class="mb-3">
+            <label for="projectAllocations" class="form-label">Project Allocations (comma separated)</label>
+            <input type="text" name="projectAllocations" th:value="${projectAllocationsString}" class="form-control" id="projectAllocations" placeholder="50, 100">
+        </div>
+
+        <button type="submit" class="btn btn-primary" th:text="${employee.id == null} ? 'Create' : 'Update'"></button>
+        <a th:href="@{/employees}" class="btn btn-secondary">Cancel</a>
+    </form>
+</div>
+</body>
+</html>
